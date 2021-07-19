@@ -2,25 +2,35 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-    entry: './src/index.tsx',
+    entry: './src/index.js',
     mode: 'development',
     module: {
         rules: [
             {
-                test: /\.[jt]sx?$/, 
-                loader: 'babel-loader',
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/, 
+                loader: 'babel-loader',
             },
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader'], 
             },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader:'file-loader'
+                    }
+                ]
+            }
         ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.js', ".jsx"],
     },
     output: {
+        path: path.resolve(__dirname, "dist/"),
+        publicPath: "/dist/",
         filename: 'bundle.js',
     },
     devServer: {
